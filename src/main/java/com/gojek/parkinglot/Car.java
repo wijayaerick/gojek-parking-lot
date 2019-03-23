@@ -1,8 +1,8 @@
 package com.gojek.parkinglot;
 
-public class Car {
-    private String registrationNumber;
-    private String colour;
+public final class Car {
+    private final String registrationNumber;
+    private final String colour;
 
     public Car(String registrationNumber, String colour) {
         this.registrationNumber = registrationNumber;
