@@ -2,10 +2,14 @@ package com.gojek.parkinglot;
 
 import com.gojek.parkinglot.exception.ParkingLotRuntimeException;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class ParkingLot {
+public class ParkingLot implements ParkingLotGovernmentRegulation {
     private Map<Integer, Car> cars;
     private final int size;
     private static final int SMALLEST_SLOT_NUMBER = 1;
@@ -88,5 +92,23 @@ public class ParkingLot {
         if (!isSlotNumberInRange(slotNumber)) {
             throw new ParkingLotRuntimeException("Slot number is out of range: " + slotNumber);
         }
+    }
+
+    @Override
+    public List<String> getRegistrationNumbersByColour(String colour) {
+        return cars.entrySet().stream().filter(entry -> entry.getValue().getColour().equals(colour))
+                .map(entry -> entry.getValue().getRegistrationNumber()).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Integer> getSlotNumberByRegistrationNumber(String registrationNumber) {
+        return cars.entrySet().stream().filter(entry -> entry.getValue().getRegistrationNumber().equals(registrationNumber))
+                .map(Map.Entry::getKey).findFirst();
+    }
+
+    @Override
+    public List<Integer> getSlotNumbersByColour(String colour) {
+        return cars.entrySet().stream().filter(entry -> entry.getValue().getColour().equals(colour))
+                .map(Map.Entry::getKey).collect(Collectors.toList());
     }
 }
