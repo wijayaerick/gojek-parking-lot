@@ -1,6 +1,6 @@
 # Parking Lot
 
-Gojek Junior Full-Stack Engineer Coding Challenge
+Gojek Junior Full-Stack Engineer Coding Test
 
 * [Description](#description)
   - [Command List](#command-list)
