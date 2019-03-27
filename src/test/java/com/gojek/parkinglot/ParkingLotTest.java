@@ -1,6 +1,8 @@
 package com.gojek.parkinglot;
 
-import com.gojek.parkinglot.exception.ParkingLotRuntimeException;
+import com.gojek.parkinglot.exception.IllegalParkingLotArgumentException;
+import com.gojek.parkinglot.exception.IllegalParkingLotOperationException;
+import com.gojek.parkinglot.exception.ParkingLotSlotNumberOutOfRangeException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -24,7 +26,7 @@ public class ParkingLotTest {
 
     @Test
     public void testCreateParkingLotOnException() {
-        expectedException.expect(ParkingLotRuntimeException.class);
+        expectedException.expect(IllegalParkingLotArgumentException.class);
         new ParkingLot(-5);
     }
 
@@ -39,7 +41,7 @@ public class ParkingLotTest {
 
     @Test
     public void testGetCarSlotNotOccupiedOnException() {
-        expectedException.expect(ParkingLotRuntimeException.class);
+        expectedException.expect(IllegalParkingLotOperationException.class);
         ParkingLot parkingLot = new ParkingLot(2);
         assertEquals(1, parkingLot.park(new Car("KA-01-HH-0001", "Red")));
         parkingLot.getCar(2);
@@ -47,7 +49,7 @@ public class ParkingLotTest {
 
     @Test
     public void testGetCarSlotNumberOutOfRangeLowerBoundOnException() {
-        expectedException.expect(ParkingLotRuntimeException.class);
+        expectedException.expect(ParkingLotSlotNumberOutOfRangeException.class);
         ParkingLot parkingLot = new ParkingLot(2);
         assertEquals(1, parkingLot.park(new Car("KA-01-HH-0001", "Red")));
         parkingLot.getCar(0);
@@ -55,7 +57,7 @@ public class ParkingLotTest {
 
     @Test
     public void testGetCarSlotNumberOutOfRangeUpperBoundOnException() {
-        expectedException.expect(ParkingLotRuntimeException.class);
+        expectedException.expect(ParkingLotSlotNumberOutOfRangeException.class);
         ParkingLot parkingLot = new ParkingLot(2);
         assertEquals(1, parkingLot.park(new Car("KA-01-HH-0001", "Red")));
         parkingLot.getCar(3);
@@ -76,7 +78,7 @@ public class ParkingLotTest {
 
     @Test
     public void testParkFullOnException() {
-        expectedException.expect(ParkingLotRuntimeException.class);
+        expectedException.expect(IllegalParkingLotOperationException.class);
         ParkingLot parkingLot = new ParkingLot(2);
         parkingLot.park(new Car("KA-01-HH-0001", "Red"));
         parkingLot.park(new Car("KA-01-HH-0002", "Green"));
@@ -98,7 +100,7 @@ public class ParkingLotTest {
 
     @Test
     public void testUnparkSlotNotOccupiedOnException() {
-        expectedException.expect(ParkingLotRuntimeException.class);
+        expectedException.expect(IllegalParkingLotOperationException.class);
         ParkingLot parkingLot = new ParkingLot(2);
         parkingLot.park(new Car("KA-01-HH-0001", "Red"));
         parkingLot.park(new Car("KA-01-HH-0002", "Green"));
@@ -108,7 +110,7 @@ public class ParkingLotTest {
 
     @Test
     public void testUnparkSlotNumberOutOfRangeLowerBoundOnException() {
-        expectedException.expect(ParkingLotRuntimeException.class);
+        expectedException.expect(ParkingLotSlotNumberOutOfRangeException.class);
         ParkingLot parkingLot = new ParkingLot(1);
         parkingLot.park(new Car("KA-01-HH-0001", "Red"));
         parkingLot.unpark(0);
@@ -116,7 +118,7 @@ public class ParkingLotTest {
 
     @Test
     public void testUnparkSlotNumberOutOfRangeUpperBoundOnException() {
-        expectedException.expect(ParkingLotRuntimeException.class);
+        expectedException.expect(ParkingLotSlotNumberOutOfRangeException.class);
         ParkingLot parkingLot = new ParkingLot(1);
         parkingLot.park(new Car("KA-01-HH-0001", "Red"));
         parkingLot.unpark(2);

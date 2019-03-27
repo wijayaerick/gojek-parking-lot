@@ -1,13 +1,14 @@
 package com.gojek.parkinglot;
 
-import com.gojek.parkinglot.exception.ParkingLotRuntimeException;
+import com.gojek.parkinglot.exception.IllegalParkingLotArgumentException;
+import com.gojek.parkinglot.exception.IllegalParkingLotOperationException;
+import com.gojek.parkinglot.exception.ParkingLotSlotNumberOutOfRangeException;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ParkingLot implements ParkingLotGovernmentRegulation {
     private Map<Integer, Car> cars;
@@ -27,7 +28,7 @@ public class ParkingLot implements ParkingLotGovernmentRegulation {
 
     private void checkSize(int size) {
         if (!isSizeValid(size)) {
-            throw new ParkingLotRuntimeException("Size must be at least 1, found size: " + size);
+            throw new IllegalParkingLotArgumentException("Size must be at least 1, found size: " + size);
         }
     }
 
@@ -37,7 +38,7 @@ public class ParkingLot implements ParkingLotGovernmentRegulation {
 
     public Car getCar(int slotNumber) {
         if (!isSlotOccupied(slotNumber)) {
-            throw new ParkingLotRuntimeException("Attempt to get car from empty parking lot slot: " + slotNumber);
+            throw new IllegalParkingLotOperationException("Attempt to get car from empty parking lot slot: " + slotNumber);
         }
         return cars.get(slotNumber);
     }
@@ -57,7 +58,7 @@ public class ParkingLot implements ParkingLotGovernmentRegulation {
 
     public int park(Car car) {
         if (isFull()) {
-            throw new ParkingLotRuntimeException("Attempt to park when parking lot is full");
+            throw new IllegalParkingLotOperationException("Attempt to park when parking lot is full");
         }
         int allocatedSlotNumber = lowestEmptySlotNumber;
         cars.put(lowestEmptySlotNumber, car);
@@ -73,7 +74,7 @@ public class ParkingLot implements ParkingLotGovernmentRegulation {
 
     public Car unpark(int slotNumber) {
         if (!isSlotOccupied(slotNumber)) {
-            throw new ParkingLotRuntimeException("Attempt to unpark empty parking lot slot: " + slotNumber);
+            throw new IllegalParkingLotOperationException("Attempt to unpark empty parking lot slot: " + slotNumber);
         }
         Car unparked = cars.remove(slotNumber);
         updateLowestEmptySlotNumberAfterUnpark(slotNumber);
@@ -90,7 +91,7 @@ public class ParkingLot implements ParkingLotGovernmentRegulation {
 
     private void checkSlotNumberInRange(int slotNumber) {
         if (!isSlotNumberInRange(slotNumber)) {
-            throw new ParkingLotRuntimeException("Slot number is out of range: " + slotNumber);
+            throw new ParkingLotSlotNumberOutOfRangeException(String.valueOf(slotNumber));
         }
     }
 
