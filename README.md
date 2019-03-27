@@ -2,13 +2,12 @@
 
 Gojek Junior Full-Stack Engineer Coding Challenge
 
-- [Parking Lot](#parking-lot)
-  - [Description](#description)
-    - [Command List](#command-list)
-    - [Illegal Operation](#illegal-operation)
-  - [Build Instruction](#build-instruction)
-  - [Run Instruction](#run-instruction)
-  - [Development](#development)
+* [Description](#description)
+  - [Command List](#command-list)
+  - [Illegal Operation](#illegal-operation)
+* [Build Instruction](#build-instruction)
+* [Run Instruction](#run-instruction)
+* [Development](#development)
 
 ## Description
 
@@ -18,7 +17,7 @@ commands.
 
 ### Command List
 
-Some basic commands: 
+Basic commands: 
 
 * `create_parking_lot <PARKING_LOT_SIZE>`
 * `park <CAR_REGISTRATION_NUMBER> <CAR_COLOUR>`
@@ -39,6 +38,7 @@ Other than that, the system should be able to handle illegal operations such as:
 * `park` when parking lot is full
 * `leave` an already empty slot, or using out-of-range slot number
 * `create_parking_lot` with size lower than 1
+* invoking unlisted command
 * accessing parking lot (park, status, etc) before successfully invoked `create_parking_lot`
 
 ## Build Instruction
@@ -51,19 +51,19 @@ parking_lot $ bin/setup
 
 ## Run Instruction
 
-After running [Build Instruction](#build-instruction), you can run Rspec-based testing suite by running `bin/run_functional_tests`.
+Run ```bin/parking_lot``` to start the application. It accepts one optional argument for input file path. You should build the project before running the application.
+
+```
+parking_lot $ bin/parking_lot <OPTIONAL_FILE_PATH>
+```
+
+You can also run Rspec-based testing suite by running `bin/run_functional_tests`.
 
 ```
 parking_lot $ bin/run_functional_tests
 ```
 
 For more information about the testing suite, see [functional_spec](functional_spec).
-
-Run ```bin/parking_lot``` to start the application. It accepts one optional argument for file path.
-
-```
-parking_lot $ bin/parking_lot <OPTIONAL_FILE_PATH>
-```
 
 ## Development
 
